@@ -13,9 +13,9 @@ const ProjectUpdateModal = ({ onClose, defaultData }) => {
   };
   const handleUpdate = async (e) => {
     e.preventDefault();
-    AxiosInstance.post(`/project/${inputdata._id}`, inputdata)
+    AxiosInstance.post(`/projects/${inputdata._id}`, inputdata)
       .then(() => {
-        toast.success("New project added successfully");
+        toast.success("project updated successfully");
         onClose();
       })
       .catch((e) => {

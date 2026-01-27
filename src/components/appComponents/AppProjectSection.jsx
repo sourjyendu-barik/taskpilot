@@ -19,10 +19,8 @@ const AppProjectSection = () => {
             onChange={(e) => setFilterStatus(e.target.value)}
           >
             <option value="all">All Projects</option>
-            <option value="To Do">To Do</option>
             <option value="In Progress">In Progress</option>
             <option value="Completed">Completed</option>
-            <option value="Blocked">Blocked</option>
           </select>
           <div className="d-flex align-items-center flex-shrink-0 p-2">
             <button

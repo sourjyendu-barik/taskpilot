@@ -3,7 +3,7 @@ import useAxios from "../hooks/useAxios";
 import { getProjectById } from "../api/Project.api";
 import AddNewTaskOfProjectModal from "./modals/AddNewTaskOfProjectModal";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
-import Error from "./ReusableDetailLoadingComponents/ErrorComponent";
+import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
 const DetailsOfProject = ({ id }) => {
   const [showAddNewTaskOfProject, setShowAddNewTaskOfProject] = useState(false);
   const projectDetails = useCallback(() => getProjectById(id), [id]);
@@ -12,7 +12,7 @@ const DetailsOfProject = ({ id }) => {
     return <Loading message={"Project details is loading"} />;
   }
   if (error) {
-    return <Error message="Error while loading project details" />;
+    return <ErrorComponent message="Error while loading project details" />;
   }
 
   const projectData = data?.data || {};

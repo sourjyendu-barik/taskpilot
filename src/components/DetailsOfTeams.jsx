@@ -3,7 +3,7 @@ import { getTeamById } from "../api/Team.api";
 import useAxios from "../hooks/useAxios";
 import BsButton from "./ReusableFormComponents/BsButton";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
-import Error from "./ReusableDetailLoadingComponents/ErrorComponent";
+import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
 import AddNewMemberModal from "./modals/AddNewMemberModal";
 const DetailsOfTeams = ({ id }) => {
   const [showNewMemberModal, setShowNewMemberModal] = useState(false);
@@ -12,7 +12,8 @@ const DetailsOfTeams = ({ id }) => {
   const { data, loading, error } = useAxios(apiFun);
 
   if (loading) return <Loading message="Loading Team Details" />;
-  if (error) return <Error message={"Error while loading teamdetails"} />;
+  if (error)
+    return <ErrorComponent message={"Error while loading teamdetails"} />;
   if (!data?.data)
     return (
       <div className="text-center py-5 text-muted">No team details found.</div>

@@ -18,6 +18,7 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
     owners: [],
     timeToComplete: 0,
     dueDate: "",
+    tags: [],
   });
   useEffect(() => {
     if (defualtData) {
@@ -43,7 +44,7 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
       // Conditional API call based on type prop
       if (!type) {
         // type === false = UPDATE
-        await AxiosInstance.put(`/task/${taskData.id}`, payload);
+        await AxiosInstance.post(`/task/${taskData.id}`, payload);
         toast.success("Task updated successfully");
       } else {
         // type === true = CREATE

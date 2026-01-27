@@ -46,11 +46,7 @@ const ProjectList = ({ filterStatus = "all" }) => {
         const { _id, name, description, projectStatus } = p;
         return (
           <div className="col-md-4 mb-2" key={_id}>
-            <div
-              className="card h-100 bg-light cursor-pointer"
-              style={{ cursor: "pointer" }}
-              onClick={() => navigate(`projectDetails/${_id}`)}
-            >
+            <div className="card h-100 bg-light cursor-pointer">
               <div className="card-body">
                 <StatusWithColor status={projectStatus} />
                 <h4>{name}</h4>
@@ -60,6 +56,13 @@ const ProjectList = ({ filterStatus = "all" }) => {
                     {description}
                   </p>
                 )}
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => navigate(`projectDetails/${_id}`)}
+                >
+                  Project Details
+                </button>
               </div>
             </div>
           </div>

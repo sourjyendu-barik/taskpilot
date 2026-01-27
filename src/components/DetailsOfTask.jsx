@@ -7,18 +7,24 @@ import ShowDataPairs from "./ShowDataPairs";
 import BsButton from "./ReusableFormComponents/BsButton";
 import AddTaskModal from "./modals/AddTaskModal";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
+import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
+import { AxiosInstance } from "../api/AxiosInstance";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 const DetailsOfTask = ({ id }) => {
   const apiFun = useCallback(() => getTaskById(id), [id]);
   const { data, loading, error } = useAxios(apiFun);
+  const navigate = useNavigate();
   const [showEditModal, setShowEditModal] = useState(false);
   if (loading) {
     return <Loading message={"Task Data loading."} />;
   }
   if (error) {
-    return <Error message="Error while loading task data." />;
+    return <ErrorComponent message="Error while loading task data." />;
   }
   const detailData = data?.data || {};
   const {
+    _id,
     name,
     project,
     team,
@@ -54,12 +60,26 @@ const DetailsOfTask = ({ id }) => {
       ? new Date(detailData.dueDate).toISOString().split("T")[0]
       : "",
     tags: detailData.tags
-      ? detailData.tags.map((t) => ({ label: t.name, value: t._id }))
+      ? detailData.tags.map((t) => ({
+          label: t,
+          value: t,
+        }))
       : [],
     status: detailData.status
       ? { value: detailData.status, label: detailData.status }
       : null,
   };
+  const deleteTask = (id) => {
+    AxiosInstance.delete(`/task/${id}`)
+      .then(() => {
+        toast.success("task deleted successfully");
+        navigate(-1);
+      })
+      .catch((e) => {
+        toast.error(e.response?.data?.message);
+      });
+  };
+  console.log(detailData);
   return (
     <div className="container mt-4">
       <div
@@ -101,11 +121,8 @@ const DetailsOfTask = ({ id }) => {
             >
               Edit
             </BsButton>
-            <BsButton type="" color="danger" onClick={() => {}}>
+            <BsButton type="" color="danger" onClick={() => deleteTask(_id)}>
               Delete
-            </BsButton>
-            <BsButton type="" color="secondary" onClick={() => {}}>
-              Marked Complete
             </BsButton>
           </div>
         </div>

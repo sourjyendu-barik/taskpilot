@@ -5,11 +5,15 @@ import { useNavigate } from "react-router";
 import BsButton from "../components/ReusableFormComponents/BsButton";
 import ProjectUpdateModal from "../components/modals/ProjectUpdateModal";
 import Loading from "../components/ReusableDetailLoadingComponents/Loading";
+import { AxiosInstance } from "../api/AxiosInstance";
+import { toast } from "react-toastify";
+import AddProject from "../components/appComponents/AddProject";
 const Project = () => {
   const { projectData, projectDataError, projectDataloading } =
     useProjectContext();
   const navigate = useNavigate();
   const [showProjectUpdateModal, setShowUpdateModal] = useState(false);
+  const [showAddProject, setShowAddProject] = useState(false);
   const [currentProjectData, setCurrentProjectData] = useState(null);
   if (projectDataloading) {
     return <Loading message={"Project data loading"} />;
@@ -20,11 +24,26 @@ const Project = () => {
   if (!projectDataloading && !projectDataError && projectData?.length === 0) {
     return <p>Curently no project data available.</p>;
   }
-  console.log(projectData);
+  const onDelete = (id) => {
+    AxiosInstance.delete(`/projects/${id}`)
+      .then(() => {
+        toast.success("project deleted successfully");
+        onClose();
+      })
+      .catch((e) => {
+        toast.error(e.response?.data?.message);
+      });
+  };
   return (
     <>
       <Layout>
         <h1>Projects</h1>
+        <div className="d-flex justify-content-end py-2">
+          <BsButton onClick={() => setShowAddProject(true)}>
+            ➕ Add New Project
+          </BsButton>
+        </div>
+
         <div className="row">
           {projectData.map((p) => {
             const { _id, name, description } = p;
@@ -56,7 +75,7 @@ const Project = () => {
                       >
                         Update
                       </BsButton>
-                      <BsButton onClick={() => {}} color="danger">
+                      <BsButton onClick={() => onDelete(_id)} color="danger">
                         Delete
                       </BsButton>
                     </div>
@@ -71,6 +90,9 @@ const Project = () => {
             defaultData={currentProjectData}
             onClose={() => setShowUpdateModal(false)}
           />
+        )}
+        {showAddProject && (
+          <AddProject onClose={() => setShowAddProject(false)} />
         )}
       </Layout>
     </>

@@ -6,8 +6,10 @@ import Error from "./ReusableDetailLoadingComponents/ErrorComponent";
 import useAxios from "../hooks/useAxios";
 import { AxiosInstance } from "../api/AxiosInstance";
 import ReactSelect from "./ReusableFormComponents/ReactSelect";
+import { useNavigate } from "react-router";
 
 const RelatedTask = ({ id }) => {
+  const navigate = useNavigate();
   const {
     data: taskResponse,
     loading,
@@ -142,6 +144,7 @@ const RelatedTask = ({ id }) => {
               <th>OWNERS</th>
               <th>DUE ON</th>
               <th>STATUS</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
@@ -153,6 +156,15 @@ const RelatedTask = ({ id }) => {
                   <td>{owners.map((o) => o.name).join(", ")}</td>
                   <td>{getStringDate(dueDate)}</td>
                   <td>{status}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="btn btn-outline-primary btn-sm"
+                      onClick={() => navigate(`/taskDetails/${_id}`)}
+                    >
+                      Details
+                    </button>
+                  </td>
                 </tr>
               );
             })}

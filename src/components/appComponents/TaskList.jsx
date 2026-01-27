@@ -25,11 +25,7 @@ const TaskList = () => {
         const { _id: id, name, status, dueDate, owners } = t;
         return (
           <div className="col-md-4" key={id}>
-            <div
-              className="card cursor-pointer mb-2"
-              style={{ cursor: "pointer" }}
-              onClick={() => navigate(`taskDetails/${id}`)}
-            >
+            <div className="card cursor-pointer mb-2">
               <div className="card-body">
                 <StatusWithColor status={status} />
                 <h4>{name}</h4>
@@ -45,6 +41,13 @@ const TaskList = () => {
                     </span>
                   ))}
                 </p>
+                <button
+                  type="button"
+                  className="btn btn-outline-primary btn-sm"
+                  onClick={() => navigate(`taskDetails/${id}`)}
+                >
+                  Task Details
+                </button>
               </div>
             </div>
           </div>
