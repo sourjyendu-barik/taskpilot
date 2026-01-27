@@ -1,33 +1,39 @@
 html,
 body {
-  height: 100%;
-  overflow-y: auto;
+  height: auto; /* allow page to grow naturally */
+  min-height: 100%; /* keep at least full viewport */
+  overflow-x: hidden; /* prevent horizontal scroll on mobile */
 }
 
 .app-layout {
   min-height: 100vh;
-}
-
-.content-wrapper {
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column; /* mobile: column layout */
 }
 
 .sidebar {
   padding: 1rem;
-  width: 240px;
+  width: 100%; /* mobile: full width */
+  box-sizing: border-box;
 }
 
+.content-wrapper {
+  flex: 1; /* fill remaining space */
+  overflow-y: auto; /* allow scrolling for content */
+}
+
+/* Desktop layout */
 @media (min-width: 768px) {
   .app-layout {
-    display: flex;
+    flex-direction: row; /* sidebar + content side by side */
   }
 
   .sidebar {
+    width: 240px;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-    transform: none !important;
     border-right: 1px solid #e5e7eb;
   }
 
