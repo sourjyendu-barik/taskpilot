@@ -1,13 +1,14 @@
 import React from "react";
-
-const Searchbar = () => {
+const Searchbar = ({ placeholder, label, value, onChange }) => {
   return (
     <div className="input-group">
       <input
         type="search"
         className="form-control"
-        placeholder="Search"
-        aria-label="Search"
+        placeholder={placeholder}
+        aria-label={label}
+        value={value}
+        onChange={onChange}
       />
       <span className="input-group-text">
         <i className="bi bi-search"></i>

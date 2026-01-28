@@ -5,7 +5,7 @@ import { AxiosInstance } from "../../api/AxiosInstance";
 import { toast } from "react-toastify";
 import TextArea from "../ReusableFormComponents/TextArea";
 import InputGroup from "../ReusableFormComponents/InputGroup";
-const ProjectUpdateModal = ({ onClose, defaultData }) => {
+const ProjectUpdateModal = ({ onClose, defaultData, refetch }) => {
   const [inputdata, setInputdata] = useState(defaultData);
   const onchange = (e) => {
     const { name, value } = e.target;
@@ -16,6 +16,7 @@ const ProjectUpdateModal = ({ onClose, defaultData }) => {
     AxiosInstance.post(`/projects/${inputdata._id}`, inputdata)
       .then(() => {
         toast.success("project updated successfully");
+        refetch();
         onClose();
       })
       .catch((e) => {

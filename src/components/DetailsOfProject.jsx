@@ -4,6 +4,7 @@ import { getProjectById } from "../api/Project.api";
 import AddNewTaskOfProjectModal from "./modals/AddNewTaskOfProjectModal";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
 import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
+import BsButton from "./ReusableFormComponents/BsButton";
 const DetailsOfProject = ({ id }) => {
   const [showAddNewTaskOfProject, setShowAddNewTaskOfProject] = useState(false);
   const projectDetails = useCallback(() => getProjectById(id), [id]);
@@ -28,12 +29,9 @@ const DetailsOfProject = ({ id }) => {
         {description}
       </p>
       <div className="d-flex justify-content-end">
-        <button
-          className="btn btn-primary"
-          onClick={() => setShowAddNewTaskOfProject(true)}
-        >
+        <BsButton onClick={() => setShowAddNewTaskOfProject(true)}>
           Add New Task
-        </button>
+        </BsButton>
       </div>
       {showAddNewTaskOfProject && (
         <AddNewTaskOfProjectModal

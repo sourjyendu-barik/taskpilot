@@ -137,39 +137,37 @@ const RelatedTask = ({ id }) => {
         <p className="text-muted mb-2">
           Showing {filteredAndSortedTasks.length} of {taskData.length} tasks
         </p>
-        <table className="table table-hover">
-          <thead>
-            <tr className="table-primary">
-              <th>TASKS</th>
-              <th>OWNERS</th>
-              <th>DUE ON</th>
-              <th>STATUS</th>
-              <th>Details</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredAndSortedTasks.map((t) => {
-              const { name, owners, dueDate, status, _id } = t;
-              return (
-                <tr key={_id}>
-                  <td>{name}</td>
-                  <td>{owners.map((o) => o.name).join(", ")}</td>
-                  <td>{getStringDate(dueDate)}</td>
-                  <td>{status}</td>
-                  <td>
-                    <button
-                      type="button"
-                      className="btn btn-outline-primary btn-sm"
-                      onClick={() => navigate(`/taskDetails/${_id}`)}
-                    >
-                      Details
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="table-responsive">
+          <table className="table table-hover">
+            <thead>
+              <tr className="table-primary">
+                <th>TASKS</th>
+                <th>DUE ON</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredAndSortedTasks.map((t) => {
+                const { name, dueDate, _id } = t;
+                return (
+                  <tr key={_id}>
+                    <td>{name}</td>
+                    <td>{getStringDate(dueDate)}</td>
+                    <td>
+                      <button
+                        type="button"
+                        className="btn btn-outline-primary btn-sm"
+                        onClick={() => navigate(`/taskDetails/${_id}`)}
+                      >
+                        Details
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

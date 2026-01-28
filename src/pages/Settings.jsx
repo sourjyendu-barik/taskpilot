@@ -9,9 +9,10 @@ const Settings = () => {
     <Layout>
       <div className="card" style={{ maxWidth: "500px" }}>
         <div className="card-header">
-          <h3>{currentUser?.name}</h3>
+          <h3>User Details</h3>
         </div>
         <div className="card-body">
+          <h5>{currentUser?.name}</h5>
           <p>
             <strong>Email: </strong>
             {currentUser?.email}

@@ -35,11 +35,18 @@ const AuthProvider = ({ children }) => {
     }
     try {
       const userDetails = jwtDecode(token);
-      setCurrentUser({
-        userId: userDetails.id,
-        name: userDetails.name,
-        email: userDetails.email,
-      });
+      const now = Date.now() / 1000;
+      if (userDetails.exp < now) {
+        console.log("Token expired, logging out");
+        localStorage.removeItem("token");
+        setCurrentUser(null);
+      } else {
+        setCurrentUser({
+          userId: userDetails.id,
+          name: userDetails.name,
+          email: userDetails.email,
+        });
+      }
     } catch (error) {
       logout();
     } finally {

@@ -1,42 +1,49 @@
 import React, { useState } from "react";
 import AddProject from "./AddProject";
 import ProjectList from "./ProjectList";
+import BsButton from "../ReusableFormComponents/BsButton";
 
 const AppProjectSection = () => {
   const [showAddProject, setShowAddProject] = useState(false);
   const [filterStatus, setFilterStatus] = useState("all");
 
   return (
-    <>
-      <div className="d-flex justify-content-between my-3 align-items-center">
-        <h2>My Projects</h2>
+    <section className="py-3">
+      {/* Header */}
+      <div className="d-flex flex-column gap-3">
+        <div className="row align-items-center">
+          <div className="col-md-6 col-12">
+            <h2 className="mb-0 fw-semibold">My Projects</h2>
+          </div>
 
-        <div className="d-flex gap-2  align-items-center">
-          <select
-            aria-label="Filter"
-            className="form-select form-select-sm"
-            value={filterStatus}
-            onChange={(e) => setFilterStatus(e.target.value)}
-          >
-            <option value="all">All Projects</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <div className="d-flex align-items-center flex-shrink-0 p-2">
-            <button
-              className="btn btn-primary px-4 py-2 m-0"
-              onClick={() => setShowAddProject(true)}
-            >
-              ➕ Add New Project
-            </button>
+          <div className="col-md-6 col-12">
+            <div className="d-flex flex-wrap justify-content-md-end gap-2">
+              <select
+                aria-label="Filter"
+                className="form-select form-select-sm w-auto"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <option value="all">All Projects</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+
+              <BsButton onClick={() => setShowAddProject(true)}>
+                ➕ Add Project
+              </BsButton>
+            </div>
           </div>
         </div>
+
+        {/* Project List */}
+        <ProjectList filterStatus={filterStatus} />
       </div>
-      <ProjectList filterStatus={filterStatus} />
+
       {showAddProject && (
         <AddProject onClose={() => setShowAddProject(false)} />
       )}
-    </>
+    </section>
   );
 };
 

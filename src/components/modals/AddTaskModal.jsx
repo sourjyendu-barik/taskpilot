@@ -9,20 +9,48 @@ import BsButton from "../ReusableFormComponents/BsButton";
 import { AxiosInstance } from "../../api/AxiosInstance";
 import SelectStatus from "../ReusableFormComponents/SelectStatus";
 import SelectTags from "../ReusableFormComponents/SelectTags";
-// import { Axios } from "axios";
-const AddTaskModal = ({ onClose, defualtData = null, type }) => {
+
+const AddTaskModal = ({
+  onClose,
+  defualtData = null,
+  type,
+  refetch = () => {},
+}) => {
   const [taskData, setTaskData] = useState({
     name: "",
     project: null,
     team: null,
     owners: [],
+    status: null,
     timeToComplete: 0,
     dueDate: "",
     tags: [],
   });
+
   useEffect(() => {
     if (defualtData) {
-      setTaskData(defualtData);
+      setTaskData({
+        name: defualtData.name || "",
+        project: defualtData.project || null,
+        team: defualtData.team || null,
+        owners: defualtData.owners || [],
+        status: defualtData.status || null,
+        timeToComplete: defualtData.timeToComplete || 0,
+        dueDate: defualtData.dueDate || "",
+        tags: defualtData.tags || [],
+      });
+    } else {
+      // Reset for create
+      setTaskData({
+        name: "",
+        project: null,
+        team: null,
+        owners: [],
+        status: null,
+        timeToComplete: 0,
+        dueDate: "",
+        tags: [],
+      });
     }
   }, [defualtData]);
 
@@ -30,6 +58,7 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
     const { name, value } = e.target;
     setTaskData((prev) => ({ ...prev, [name]: value }));
   };
+
   const onSubmit = async (e) => {
     e.preventDefault();
     const payload = {
@@ -39,23 +68,30 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
       owners: taskData.owners.map((u) => u.value),
       timeToComplete: Number(taskData.timeToComplete),
       dueDate: taskData.dueDate,
+      ...(type === false && {
+        // ✅ Only for UPDATE
+        status: taskData.status?.value || null,
+        tags: taskData.tags.map((t) => t.value),
+      }),
     };
+
     try {
-      // Conditional API call based on type prop
       if (!type) {
-        // type === false = UPDATE
-        await AxiosInstance.post(`/task/${taskData.id}`, payload);
+        // UPDATE
+        await AxiosInstance.post(`/task/${defualtData.id}`, payload);
         toast.success("Task updated successfully");
       } else {
-        // type === true = CREATE
+        // CREATE
         await AxiosInstance.post("/task", payload);
         toast.success("New task added successfully");
       }
+      refetch();
       onClose();
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed");
     }
   };
+
   return (
     <ModalWrapper onClose={onClose}>
       <h4 className="text-center">
@@ -82,7 +118,6 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
             setTaskData((prev) => ({ ...prev, team: selectedTeam }))
           }
         />
-
         <SelectUsers
           value={taskData.owners}
           onChange={(selectedOwners) =>
@@ -101,8 +136,8 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
             />
             <SelectTags
               value={taskData.tags}
-              onChange={(selectedSTags) => {
-                setTaskData((prev) => ({ ...prev, tags: selectedSTags }));
+              onChange={(selectedTags) => {
+                setTaskData((prev) => ({ ...prev, tags: selectedTags }));
               }}
             />
           </>
@@ -127,11 +162,11 @@ const AddTaskModal = ({ onClose, defualtData = null, type }) => {
             required
           />
         </div>
-        <div className="d-flex justify-content-end align-item-center gap-2">
+        <div className="d-flex justify-content-end align-items-center gap-2">
           <BsButton color="secondary" onClick={onClose}>
             Close
           </BsButton>
-          <BsButton type="submit"> {type ? "Create" : "Update"}</BsButton>
+          <BsButton type="submit">{type ? "Create" : "Update"}</BsButton>
         </div>
       </form>
     </ModalWrapper>

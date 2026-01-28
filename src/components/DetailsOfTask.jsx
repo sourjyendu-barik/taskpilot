@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 const DetailsOfTask = ({ id }) => {
   const apiFun = useCallback(() => getTaskById(id), [id]);
-  const { data, loading, error } = useAxios(apiFun);
+  const { data, loading, error, refetch } = useAxios(apiFun);
   const navigate = useNavigate();
   const [showEditModal, setShowEditModal] = useState(false);
   if (loading) {
@@ -132,6 +132,7 @@ const DetailsOfTask = ({ id }) => {
           defualtData={transformedData}
           onClose={() => setShowEditModal(false)}
           type={false}
+          refetch={refetch}
         />
       )}
     </div>

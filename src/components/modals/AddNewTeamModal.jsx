@@ -6,7 +6,7 @@ import SelectUsers from "../ReusableFormComponents/SelectUsers";
 import BsButton from "../ReusableFormComponents/BsButton";
 import { AxiosInstance } from "../../api/AxiosInstance";
 import { toast } from "react-toastify";
-const AddNewTeamModal = ({ onClose }) => {
+const AddNewTeamModal = ({ onClose, refetch }) => {
   const [teamData, setTeamData] = useState({
     name: "",
     description: "",
@@ -26,6 +26,7 @@ const AddNewTeamModal = ({ onClose }) => {
       .then((res) => {
         setTeamData((prev) => ({ name: "", description: "", members: [] }));
         onClose();
+        refetch();
         toast.success(`${res.data.data.name} Team created successfully`);
       })
       .catch((e) => {

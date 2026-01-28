@@ -8,7 +8,7 @@ const BsButton = ({
 }) => {
   return (
     <button
-      className={`btn btn-${color} ${!width ? "" : `w-${width}`}`}
+      className={`btn btn-sm btn-md btn-${color} ${!width ? "" : `w-${width}`}`}
       type={type}
       onClick={onClick}
       {...rest}

@@ -7,8 +7,11 @@ import Loading from "../ReusableDetailLoadingComponents/Loading";
 import Error from "../ReusableDetailLoadingComponents/ErrorComponent";
 const TaskList = () => {
   const navigate = useNavigate();
-  const { userTasksData, taskdataLoading, taskdataError } =
-    useUserDataContext();
+  const {
+    filteredTasks: userTasksData,
+    taskdataLoading,
+    taskdataError,
+  } = useUserDataContext();
   if (taskdataLoading) {
     return <Loading message={"Task data is loading"} />;
   }

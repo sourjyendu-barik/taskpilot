@@ -5,12 +5,16 @@ import BsButton from "./ReusableFormComponents/BsButton";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
 import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
 import AddNewMemberModal from "./modals/AddNewMemberModal";
+import { AxiosInstance } from "../api/AxiosInstance";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
+import { useTeamContext } from "../context/TeamContextProvider";
 const DetailsOfTeams = ({ id }) => {
   const [showNewMemberModal, setShowNewMemberModal] = useState(false);
-
+  const { refetch: refetchTeamList } = useTeamContext();
   const apiFun = useCallback(() => getTeamById(id), [id]);
-  const { data, loading, error } = useAxios(apiFun);
-
+  const { data, loading, error, refetch } = useAxios(apiFun);
+  const navigate = useNavigate();
   if (loading) return <Loading message="Loading Team Details" />;
   if (error)
     return <ErrorComponent message={"Error while loading teamdetails"} />;
@@ -20,6 +24,16 @@ const DetailsOfTeams = ({ id }) => {
     );
 
   const { name, members, description } = data.data;
+  const deleteTeam = async (id) => {
+    try {
+      await AxiosInstance.delete(`/teams/${id}`);
+      toast.success("Team deleted successfully");
+      refetchTeamList();
+      navigate(-1);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to delete team");
+    }
+  };
 
   return (
     <div
@@ -89,7 +103,7 @@ const DetailsOfTeams = ({ id }) => {
             type="button"
             color="danger"
             className="btn-lg px-4"
-            onClick={() => {}}
+            onClick={() => deleteTeam(id)}
           >
             <i className="bi bi-trash3 me-2"></i>Delete Team
           </BsButton>
@@ -101,6 +115,7 @@ const DetailsOfTeams = ({ id }) => {
           teamId={id}
           existUsers={members}
           name={name}
+          refetch={refetch}
         />
       )}
     </div>

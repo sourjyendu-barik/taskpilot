@@ -8,9 +8,16 @@ import Loading from "../components/ReusableDetailLoadingComponents/Loading";
 import { AxiosInstance } from "../api/AxiosInstance";
 import { toast } from "react-toastify";
 import AddProject from "../components/appComponents/AddProject";
+import Searchbar from "../components/Searchbar";
 const Project = () => {
-  const { projectData, projectDataError, projectDataloading } =
-    useProjectContext();
+  const {
+    filteredProjectData: projectData,
+    searchTerm,
+    setSearchTerm,
+    projectDataError,
+    projectDataloading,
+    refetchProjectData,
+  } = useProjectContext();
   const navigate = useNavigate();
   const [showProjectUpdateModal, setShowUpdateModal] = useState(false);
   const [showAddProject, setShowAddProject] = useState(false);
@@ -28,6 +35,7 @@ const Project = () => {
     AxiosInstance.delete(`/projects/${id}`)
       .then(() => {
         toast.success("project deleted successfully");
+        refetchProjectData();
         onClose();
       })
       .catch((e) => {
@@ -38,10 +46,13 @@ const Project = () => {
     <>
       <Layout>
         <h1>Projects</h1>
-        <div className="d-flex justify-content-end py-2">
-          <BsButton onClick={() => setShowAddProject(true)}>
-            ➕ Add New Project
-          </BsButton>
+        <div className="my-2">
+          <Searchbar
+            label={"Enter project name"}
+            placeholder={"Enter project name"}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
         </div>
 
         <div className="row">
@@ -85,10 +96,16 @@ const Project = () => {
             );
           })}
         </div>
+        <div className="d-flex justify-content-end py-2">
+          <BsButton onClick={() => setShowAddProject(true)}>
+            ➕ Add New Project
+          </BsButton>
+        </div>
         {showProjectUpdateModal && (
           <ProjectUpdateModal
             defaultData={currentProjectData}
             onClose={() => setShowUpdateModal(false)}
+            refetch={refetchProjectData}
           />
         )}
         {showAddProject && (

@@ -19,6 +19,7 @@ import Auth from "./pages/Auth.jsx";
 import RequireAuth from "./pages/RequireAuth.jsx";
 import Settings from "./pages/Settings.jsx";
 import UserDataProvider from "./context/UserDataProvider.jsx";
+import ReportContextProvider from "./context/ReportContextProviedr.jsx";
 import ReportPage from "./pages/ReportPage/ReportPage.jsx";
 const router = createBrowserRouter([
   { path: "/auth", element: <Auth /> },
@@ -44,19 +45,21 @@ createRoot(document.getElementById("root")).render(
           <TeamContextProvider>
             <TaskContextProvider>
               <UserDataProvider>
-                <RouterProvider router={router} />
-                <ToastContainer
-                  position="top-center"
-                  autoClose={3000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick={false}
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
+                <ReportContextProvider>
+                  <RouterProvider router={router} />
+                  <ToastContainer
+                    position="top-center"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick={false}
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                  />
+                </ReportContextProvider>
               </UserDataProvider>
             </TaskContextProvider>
           </TeamContextProvider>

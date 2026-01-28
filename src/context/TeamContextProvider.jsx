@@ -9,10 +9,11 @@ const TeamContextProvider = ({ children }) => {
     data,
     loading: teamsDataLoading,
     error: teamsDataError,
+    refetch,
   } = useAxios(getAllTeams);
   const allTeams = data?.data || [];
   // console.log(allTeams);
-  const value = { allTeams, teamsDataLoading, teamsDataError };
+  const value = { allTeams, teamsDataLoading, teamsDataError, refetch };
   return <TeamContext.Provider value={value}>{children}</TeamContext.Provider>;
 };
 export default TeamContextProvider;

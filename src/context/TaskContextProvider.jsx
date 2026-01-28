@@ -8,9 +8,10 @@ const TaskContextProvider = ({ children }) => {
     data,
     loading: taskDataLoading,
     error: errorTaskData,
+    refetch,
   } = useAxios(getTask);
   const taskData = data?.data || [];
-  const value = { taskData, taskDataLoading, errorTaskData };
+  const value = { taskData, taskDataLoading, errorTaskData, refetch };
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
 

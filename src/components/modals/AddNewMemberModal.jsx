@@ -4,7 +4,7 @@ import SelectUsers from "../ReusableFormComponents/SelectUsers";
 import BsButton from "../ReusableFormComponents/BsButton";
 import { AxiosInstance } from "../../api/AxiosInstance";
 import { toast } from "react-toastify";
-const AddNewMemberModal = ({ onClose, teamId, existUsers, name }) => {
+const AddNewMemberModal = ({ onClose, teamId, existUsers, name, refetch }) => {
   const existUserReactSelectFormat = existUsers.map((u) => ({
     label: u.name,
     value: u._id,
@@ -19,6 +19,7 @@ const AddNewMemberModal = ({ onClose, teamId, existUsers, name }) => {
     })
       .then(() => {
         onClose();
+        refetch();
         toast.success("New members added successfully");
       })
       .catch((e) => {

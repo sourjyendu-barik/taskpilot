@@ -1,4 +1,10 @@
-import { useCallback, useContext, createContext } from "react";
+import {
+  useCallback,
+  useContext,
+  createContext,
+  useState,
+  useMemo,
+} from "react";
 import useAxios from "../hooks/useAxios";
 import { useAuthContxt } from "./AuthProvider";
 import { getUserProjects, getUserTasks } from "../api/UserData.api";
@@ -34,6 +40,25 @@ const UserDataProvider = ({ children }) => {
   const shouldFetch = !isAuthChecking && !!id;
   const userProjectsData = shouldFetch ? projectsData?.data || [] : [];
   const userTasksData = shouldFetch ? taskdata?.data || [] : [];
+
+  //code for filtereddata
+  const [searchTerm, setSearchTerm] = useState("");
+  // const filteredProjects = useMemo(() => {
+  //   if (!searchTerm) {
+  //     return userProjectsData;
+  //   }
+  //   return userProjectsData.filter((p) =>
+  //     p.name?.toLowerCase().includes(searchTerm.toLowerCase()),
+  //   );
+  // }, [searchTerm, userProjectsData]);
+  const filteredTasks = useMemo(() => {
+    if (!searchTerm) {
+      return userTasksData;
+    }
+    return userTasksData.filter((t) =>
+      t.name?.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+  }, [searchTerm, userTasksData]);
   const value = {
     userProjectsData,
     projectDataLoading,
@@ -41,6 +66,11 @@ const UserDataProvider = ({ children }) => {
     userTasksData,
     taskdataLoading,
     taskdataError,
+    //filtered data
+    // filteredProjects,
+    searchTerm,
+    setSearchTerm,
+    filteredTasks,
   };
 
   return (
