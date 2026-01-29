@@ -9,35 +9,36 @@ const AppProjectSection = () => {
 
   return (
     <section className="py-3">
-      {/* Header */}
       <div className="d-flex flex-column gap-3">
-        <div className="row align-items-center">
-          <div className="col-md-6 col-12">
+        <div className="row">
+          <div className="col-md-6 mb-2">
             <h2 className="mb-0 fw-semibold">My Projects</h2>
           </div>
 
-          <div className="col-md-6 col-12">
-            <div className="d-flex flex-wrap justify-content-md-end gap-2">
+          <div className="col-md-6">
+            <div className="d-flex justify-content-end gap-2">
               <select
                 aria-label="Filter"
-                className="form-select form-select-sm w-auto"
+                className="form-select form-select-sm w-100 w-md-auto ms-md-auto"
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
+                style={{ maxWidth: "280px" }}
               >
                 <option value="all">All Projects</option>
                 <option value="In Progress">In Progress</option>
                 <option value="Completed">Completed</option>
               </select>
-
-              <BsButton onClick={() => setShowAddProject(true)}>
-                ➕ Add Project
-              </BsButton>
             </div>
           </div>
         </div>
 
-        {/* Project List */}
         <ProjectList filterStatus={filterStatus} />
+
+        <div className="d-flex justify-content-end">
+          <BsButton onClick={() => setShowAddProject(true)}>
+            ➕ Add New Project
+          </BsButton>
+        </div>
       </div>
 
       {showAddProject && (

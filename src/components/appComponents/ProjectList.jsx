@@ -23,8 +23,7 @@ const ProjectList = ({ filterStatus = "all" }) => {
   ) {
     return <p>Currently no project data available.</p>;
   }
-
-  const projects = userProjectsData?.data || userProjectsData || [];
+  const projects = userProjectsData || userProjectsData || [];
   const filteredProjects = projects.filter((project) => {
     if (filterStatus === "all") return true;
     return project.projectStatus === filterStatus;

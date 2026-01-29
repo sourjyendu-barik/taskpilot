@@ -5,7 +5,7 @@ import { useNavigate } from "react-router";
 import getStringDate from "../../hooks/getStringDate";
 import Loading from "../ReusableDetailLoadingComponents/Loading";
 import Error from "../ReusableDetailLoadingComponents/ErrorComponent";
-const TaskList = () => {
+const TaskList = ({ filterStatus }) => {
   const navigate = useNavigate();
   const {
     filteredTasks: userTasksData,
@@ -19,12 +19,25 @@ const TaskList = () => {
     return <Error message={"Error while loading task data"} />;
   }
   if (!taskdataLoading && !taskdataError && userTasksData?.length === 0) {
-    return <p>no Task data present.</p>;
+    return <p>No Task data present.</p>;
   }
-
+  const tasks = userTasksData || [];
+  const filteredTasks = tasks.filter((t) => {
+    if (filterStatus === "all") return true;
+    return t.status === filterStatus;
+  });
+  if (filteredTasks.length === 0) {
+    return (
+      <div className="text-center py-5">
+        <p className="text-muted">
+          No tasks match the selected filter: <strong>"{filterStatus}"</strong>
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="row">
-      {userTasksData.map((t) => {
+      {filteredTasks.map((t) => {
         const { _id: id, name, status, dueDate, owners } = t;
         return (
           <div className="col-md-4" key={id}>
