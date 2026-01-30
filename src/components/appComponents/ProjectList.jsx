@@ -38,11 +38,17 @@ const ProjectList = ({ filterStatus = "all" }) => {
       </div>
     );
   }
-
   return (
     <div className="row">
       {filteredProjects.map((p) => {
-        const { _id, name, description, projectStatus } = p;
+        const {
+          _id,
+          name,
+          description,
+          totalTasks = 0,
+          completedTasks = 0,
+          projectStatus,
+        } = p;
         return (
           <div className="col-md-4 mb-2" key={_id}>
             <div className="card h-100 bg-light cursor-pointer">
@@ -55,6 +61,9 @@ const ProjectList = ({ filterStatus = "all" }) => {
                     {description}
                   </p>
                 )}
+                {!description && <p>No description available</p>}
+                <p>Total Tasks: {totalTasks}</p>
+                <p>Completed Tasks: {completedTasks}</p>
                 <button
                   type="button"
                   className="btn btn-outline-primary btn-sm"

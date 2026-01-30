@@ -66,6 +66,7 @@ const AllProjects = () => {
                       {description}
                     </p>
                   )}
+                  {!description && <p>No description available</p>}
                 </div>
                 <div className="card-footer">
                   <div className="d-flex justify-content-end gap-2">

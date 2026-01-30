@@ -21,6 +21,8 @@ import Settings from "./pages/Settings.jsx";
 import UserDataProvider from "./context/UserDataProvider.jsx";
 import ReportContextProvider from "./context/ReportContextProviedr.jsx";
 import ReportPage from "./pages/ReportPage/ReportPage.jsx";
+import TagProviedr from "./context/TagProviedr.jsx";
+import Tags from "./pages/Tags.jsx";
 const router = createBrowserRouter([
   { path: "/auth", element: <Auth /> },
   {
@@ -34,6 +36,7 @@ const router = createBrowserRouter([
       { path: "projectDetails/:id", element: <ProjetDetails /> },
       { path: "/settings", element: <Settings /> },
       { path: "/report", element: <ReportPage /> },
+      { path: "/tags", element: <Tags /> },
     ],
   },
 ]);
@@ -46,19 +49,21 @@ createRoot(document.getElementById("root")).render(
             <TaskContextProvider>
               <UserDataProvider>
                 <ReportContextProvider>
-                  <RouterProvider router={router} />
-                  <ToastContainer
-                    position="top-center"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="light"
-                  />
+                  <TagProviedr>
+                    <RouterProvider router={router} />
+                    <ToastContainer
+                      position="top-center"
+                      autoClose={3000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick={false}
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="light"
+                    />
+                  </TagProviedr>
                 </ReportContextProvider>
               </UserDataProvider>
             </TaskContextProvider>

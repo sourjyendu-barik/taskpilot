@@ -24,10 +24,13 @@ const DetailsOfProject = ({ id }) => {
   return (
     <div>
       <h1>{name}</h1>
-      <p>
-        <strong>Description: </strong>
-        {description}
-      </p>
+      {description && (
+        <p>
+          <strong>Description: </strong>
+          {description}
+        </p>
+      )}
+      {!description && <p> No description is available</p>}
       <div className="d-flex justify-content-end">
         <BsButton onClick={() => setShowAddNewTaskOfProject(true)}>
           Add New Task

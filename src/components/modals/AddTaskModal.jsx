@@ -142,7 +142,7 @@ const AddTaskModal = ({
             />
           </>
         )}
-        <div className="d-flex justify-content-between">
+        <div className="d-flex flex-column flex-md-row justify-content-between">
           <InputGroup
             label="Select Due date: "
             name="dueDate"
