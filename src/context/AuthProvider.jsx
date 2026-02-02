@@ -31,6 +31,7 @@ const AuthProvider = ({ children }) => {
     const token = localStorage.getItem("token");
     if (!token) {
       setAuthChecking(false);
+      setCurrentUser(null);
       return;
     }
     try {

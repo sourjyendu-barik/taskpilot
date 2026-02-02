@@ -1,14 +1,11 @@
-import React, { useState } from "react";
 import { useTagContext } from "../context/TagProviedr";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
 import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
 import BsButton from "./ReusableFormComponents/BsButton";
 import { deleteTagsById } from "../api/Tag.api";
 import { toast } from "react-toastify";
-import AddNewTags from "./modals/AddNewTags";
 const Taglist = () => {
   const { tags, loading, error, refetchTags } = useTagContext();
-  const [show, setShow] = useState(false);
   if (loading) {
     return <Loading message="Tags data are loading" />;
   }
@@ -34,7 +31,7 @@ const Taglist = () => {
           const { _id, name } = t;
           return (
             <div className="col-md-2" key={_id}>
-              <div className="card">
+              <div className="card mb-2">
                 <div className="card-body">
                   <p>
                     <strong>{name}</strong>
@@ -48,10 +45,6 @@ const Taglist = () => {
           );
         })}
       </div>
-      <div className="d-flex justify-content-end">
-        <BsButton onClick={() => setShow(true)}>Add New Tag</BsButton>
-      </div>
-      {show && <AddNewTags onClose={() => setShow(false)} />}
     </>
   );
 };

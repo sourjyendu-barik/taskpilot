@@ -19,13 +19,14 @@ const AddNewTags = ({ onClose }) => {
       await AxiosInstance.post("/tags", tagData);
       toast.success("Added new tag succssfully");
       refetchTags();
-      onclose();
+      onClose();
     } catch (error) {
       toast.error(error?.response?.data?.message);
     }
   };
   return (
     <ModalWrapper onClose={onClose}>
+      <h2>Add New Tag</h2>
       <form onSubmit={handleAddTag}>
         <InputGroup
           label="Tag Name"

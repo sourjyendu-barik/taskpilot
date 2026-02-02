@@ -28,6 +28,7 @@ const ReactSelect = ({
         classNamePrefix="react-select" // Adds a CSS prefix so we can easily style react-select components
         menuPortalTarget={document.body} // Renders the dropdown menu in <body> to prevent it from being hidden inside modals or overflow containers
         styles={{ menuPortal: (base) => ({ ...base, zIndex: 9999 }) }} // Increases dropdown z-index so it appears above modals and other UI layers
+        menuPlacement="auto"
         {...rest}
       />
     </div>
