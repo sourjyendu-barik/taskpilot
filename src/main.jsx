@@ -26,10 +26,9 @@ import Tags from "./pages/Tags";
 
 import Loading from "./components/ReusableDetailLoadingComponents/Loading";
 
-/* ---------------- ROUTES (same as your original) ---------------- */
 
 const router = createBrowserRouter([
-  { path: "/auth", element: <Auth /> },
+  { path: "/auth", element: <Auth /> },//public
   {
     element: <RequireAuth />,
     children: [
@@ -46,7 +45,6 @@ const router = createBrowserRouter([
   },
 ]);
 
-/* -------- WAIT FOR AUTH, THEN MOUNT OTHER PROVIDERS -------- */
 
 const AppProviders = () => {
   const { isAuthChecking } = useAuthContxt();
@@ -75,7 +73,6 @@ const AppProviders = () => {
   );
 };
 
-/* ---------------- ROOT RENDER ---------------- */
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>

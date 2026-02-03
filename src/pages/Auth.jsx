@@ -3,14 +3,10 @@ import LoginModal from "../components/modals/LoginModal";
 import SignupModal from "../components/modals/SignInModal";
 import { useAuthContxt } from "../context/AuthProvider";
 import { Navigate } from "react-router-dom";
-import Loading from "../components/ReusableDetailLoadingComponents/Loading";
 const Auth = () => {
-  const { currentUser, isAuthChecking } = useAuthContxt();
+  const { currentUser } = useAuthContxt();
   const [authMode, setAuthMode] = useState(null);
-  // if (isAuthChecking) {
-  //   return <Loading message="loading....." />;
-  // }
-
+ 
   if (currentUser) {
     return <Navigate to="/" replace />;
   }

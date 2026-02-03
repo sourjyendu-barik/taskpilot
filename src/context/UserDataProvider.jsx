@@ -29,12 +29,14 @@ const UserDataProvider = ({ children }) => {
     data: projectsData,
     loading: projectDataLoading,
     error: projectDataError,
+    refetch: refetchProjectData,
   } = useAxios(apiFunProject);
 
   const {
     data: taskdata,
     loading: taskdataLoading,
     error: taskdataError,
+    refetch: refetchTaskData,
   } = useAxios(apiFunTask);
 
   const shouldFetch = !isAuthChecking && !!id;
@@ -63,6 +65,7 @@ const UserDataProvider = ({ children }) => {
     userProjectsData,
     projectDataLoading,
     projectDataError,
+    refetchProjectData,
     userTasksData,
     taskdataLoading,
     taskdataError,
@@ -71,6 +74,7 @@ const UserDataProvider = ({ children }) => {
     searchTerm,
     setSearchTerm,
     filteredTasks,
+    refetchTaskData,
   };
 
   return (

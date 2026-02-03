@@ -43,7 +43,7 @@ const ReportContextProvider = ({ children }) => {
       refetchPending: pending.refetch,
       refetchOwners: byOwners.refetch,
       refetchTeams: byTeams.refetch,
-      refetchAll: () => {
+      refetchAllReport: () => {
         weekly.refetch();
         pending.refetch();
         byOwners.refetch();

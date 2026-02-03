@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useUserDataContext } from "../../context/UserDataProvider";
 import ModalWrapper from "./ModalWrapper";
 import InputGroup from "../ReusableFormComponents/InputGroup";
 import { toast } from "react-toastify";
@@ -9,6 +10,7 @@ import BsButton from "../ReusableFormComponents/BsButton";
 import { AxiosInstance } from "../../api/AxiosInstance";
 import SelectStatus from "../ReusableFormComponents/SelectStatus";
 import SelectTags from "../ReusableFormComponents/SelectTags";
+import { useReportContext } from "../../context/ReportContextProviedr";
 
 const AddTaskModal = ({
   onClose,
@@ -26,7 +28,8 @@ const AddTaskModal = ({
     dueDate: "",
     tags: [],
   });
-
+  const { refetchProjectData } = useUserDataContext();
+  const { refetchAllReport } = useReportContext();
   useEffect(() => {
     if (defualtData) {
       setTaskData({
@@ -69,7 +72,6 @@ const AddTaskModal = ({
       timeToComplete: Number(taskData.timeToComplete),
       dueDate: taskData.dueDate,
       ...(type === false && {
-        // ✅ Only for UPDATE
         status: taskData.status?.value || null,
         tags: taskData.tags.map((t) => t.value),
       }),
@@ -86,6 +88,8 @@ const AddTaskModal = ({
         toast.success("New task added successfully");
       }
       refetch();
+      refetchProjectData();
+      refetchAllReport();
       onClose();
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed");

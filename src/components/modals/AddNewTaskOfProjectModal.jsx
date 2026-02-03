@@ -6,7 +6,9 @@ import SelectUsers from "../ReusableFormComponents/SelectUsers";
 import BsButton from "../ReusableFormComponents/BsButton";
 import { AxiosInstance } from "../../api/AxiosInstance";
 import { toast } from "react-toastify";
-const AddNewTaskOfProjectModal = ({ id, name, onClose }) => {
+import { useUserDataContext } from "../../context/UserDataProvider";
+import { useReportContext } from "../../context/ReportContextProviedr";
+const AddNewTaskOfProjectModal = ({ id, name, onClose, handleTaskChange }) => {
   const [taskData, setTaskData] = useState({
     name: "",
     project: id,
@@ -15,6 +17,8 @@ const AddNewTaskOfProjectModal = ({ id, name, onClose }) => {
     timeToComplete: 0,
     dueDate: "",
   });
+  const { refetchProjectData } = useUserDataContext();
+  const { refetchAllReport } = useReportContext();
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setTaskData((prev) => ({ ...prev, [name]: value }));
@@ -32,7 +36,9 @@ const AddNewTaskOfProjectModal = ({ id, name, onClose }) => {
     try {
       await AxiosInstance.post("/task", payload);
       toast.success("New task added successfully");
-
+      handleTaskChange();
+      refetchProjectData();
+      refetchAllReport();
       onClose();
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed");

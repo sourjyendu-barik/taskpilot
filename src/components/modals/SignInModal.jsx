@@ -6,12 +6,14 @@ import BsButton from "../ReusableFormComponents/BsButton";
 import { useState } from "react";
 import { AxiosInstance } from "../../api/AxiosInstance";
 import { toast } from "react-toastify";
+import { useReportContext } from "../../context/ReportContextProviedr";
 const SignInModal = ({ onClose, onGoingToLogin }) => {
   const [signup_data, setSignup_data] = useState({
     name: "",
     email: "",
     password: "",
   });
+  const { refetchAll } = useReportContext();
   const [showPassword, setShowPassword] = useState(false);
   const onchangeSignIn = (e) => {
     const { name, value } = e.target;
@@ -27,6 +29,7 @@ const SignInModal = ({ onClose, onGoingToLogin }) => {
         email: "",
         password: "",
       });
+      refetchAll();
       onClose();
     } catch (e) {
       toast.error(e.response?.data?.message);

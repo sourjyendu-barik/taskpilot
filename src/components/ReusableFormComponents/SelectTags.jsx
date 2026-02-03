@@ -30,6 +30,7 @@ const SelectTags = ({ value, onChange }) => {
         onChange={onChange}
         options={tagsOptions}
         placeholder={"select tags"}
+        isCreatable={true}
       />
     </>
   );

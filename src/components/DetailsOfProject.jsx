@@ -5,7 +5,7 @@ import AddNewTaskOfProjectModal from "./modals/AddNewTaskOfProjectModal";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
 import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
 import BsButton from "./ReusableFormComponents/BsButton";
-const DetailsOfProject = ({ id }) => {
+const DetailsOfProject = ({ id, handleTaskChange }) => {
   const [showAddNewTaskOfProject, setShowAddNewTaskOfProject] = useState(false);
   const projectDetails = useCallback(() => getProjectById(id), [id]);
   const { data, loading, error } = useAxios(projectDetails);
@@ -41,6 +41,7 @@ const DetailsOfProject = ({ id }) => {
           id={id}
           name={name}
           onClose={() => setShowAddNewTaskOfProject(false)}
+          handleTaskChange={handleTaskChange}
         />
       )}
     </div>

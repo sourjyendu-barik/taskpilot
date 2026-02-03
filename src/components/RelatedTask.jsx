@@ -1,5 +1,4 @@
-import { useTaskContext } from "../context/TaskContextProvider";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import getStringDate from "../hooks/getStringDate";
 import Loading from "./ReusableDetailLoadingComponents/Loading";
 import Error from "./ReusableDetailLoadingComponents/ErrorComponent";
@@ -8,17 +7,24 @@ import { AxiosInstance } from "../api/AxiosInstance";
 import ReactSelect from "./ReusableFormComponents/ReactSelect";
 import { useNavigate } from "react-router";
 
-const RelatedTask = ({ id }) => {
+const RelatedTask = ({ id, refreshKey }) => {
   const navigate = useNavigate();
   const {
     data: taskResponse,
     loading,
     error,
+    refetch,
   } = useAxios(() =>
     AxiosInstance.get("/task", {
       params: { project: id },
     }),
   );
+  useEffect(() => {
+    if (refreshKey) {
+      refetch();
+    }
+  }, [refreshKey, refetch]);
+
   const taskData = taskResponse?.data ?? [];
 
   // State for filters and sorting
