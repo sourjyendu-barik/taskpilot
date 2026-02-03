@@ -11,6 +11,7 @@ import ErrorComponent from "./ReusableDetailLoadingComponents/ErrorComponent";
 import { AxiosInstance } from "../api/AxiosInstance";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { useUserDataContext } from "../context/UserDataProvider";
 const DetailsOfTask = ({ id }) => {
   const apiFun = useCallback(() => getTaskById(id), [id]);
   const { data, loading, error, refetch } = useAxios(apiFun);
@@ -23,6 +24,7 @@ const DetailsOfTask = ({ id }) => {
     return <ErrorComponent message="Error while loading task data." />;
   }
   const detailData = data?.data || {};
+  const { refetchProjectData } = useUserDataContext();
   const {
     _id,
     name,
@@ -73,13 +75,13 @@ const DetailsOfTask = ({ id }) => {
     AxiosInstance.delete(`/task/${id}`)
       .then(() => {
         toast.success("task deleted successfully");
+        refetchProjectData();
         navigate(-1);
       })
       .catch((e) => {
         toast.error(e.response?.data?.message);
       });
   };
-  console.log(detailData);
   return (
     <div className="container mt-4">
       <div
