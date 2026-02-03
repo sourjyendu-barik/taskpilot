@@ -11,6 +11,7 @@ import { AxiosInstance } from "../../api/AxiosInstance";
 import SelectStatus from "../ReusableFormComponents/SelectStatus";
 import SelectTags from "../ReusableFormComponents/SelectTags";
 import { useReportContext } from "../../context/ReportContextProviedr";
+import { useTagContext } from "../../context/TagProviedr";
 
 const AddTaskModal = ({
   onClose,
@@ -30,6 +31,7 @@ const AddTaskModal = ({
   });
   const { refetchProjectData } = useUserDataContext();
   const { refetchAllReport } = useReportContext();
+  const { refetchTags } = useTagContext();
   useEffect(() => {
     if (defualtData) {
       setTaskData({
@@ -90,6 +92,7 @@ const AddTaskModal = ({
       refetch();
       refetchProjectData();
       refetchAllReport();
+      refetchTags();
       onClose();
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed");
